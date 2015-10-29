@@ -25,5 +25,7 @@ RUN set -x;\
 RUN npm install --global plus.garden
 ENV NODE_PATH /usr/local/lib/node_modules/
 
+COPY entrypoint.sh /
+
 WORKDIR /app
-ENTRYPOINT ["plus.garden"]
+ENTRYPOINT ["/entrypoint.sh"]
