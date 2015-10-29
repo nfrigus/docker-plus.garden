@@ -23,7 +23,7 @@ RUN set -x;\
     rm "nodejs.tgz"
 
 RUN npm install --global plus.garden
+ENV NODE_PATH /usr/local/lib/node_modules/
 
 WORKDIR /app
 ENTRYPOINT ["plus.garden"]
-    
