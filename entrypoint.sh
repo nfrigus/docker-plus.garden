@@ -13,8 +13,9 @@ is_npm_ok () {
 }
 
 npm_install () {
-    [[ $1 = "clean" ]] && rm -rf node_modules
+    [[ $1 = "clean" ]] && rm -rf node_modules/*
     until is_npm_ok; do
+        npm list 2>&1 >/dev/null | awk '/^npm (ERR|WARN)/' | grep -v 'npm ERR! extraneous:' | wc -l
         npm install
         npm_install clean
     done
