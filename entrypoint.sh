@@ -1,6 +1,6 @@
 #!/bin/sh
 
-
+# TODO: add locking for install process to avoid several instances conflict
 LOCK=/var/run/npm-install.pid
 NPM_INSTALL_RETRIES=${NPM_INSTALL_RETRIES:-2}
 
