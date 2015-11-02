@@ -2,7 +2,7 @@
 
 
 LOCK=/var/run/npm-install.pid
-
+NPM_INSTALL_RETRIES=${NPM_INSTALL_RETRIES:-2}
 
 
 is_npm_ok () {
@@ -13,10 +13,17 @@ is_npm_ok () {
 }
 
 npm_install () {
-    [[ $1 = "clean" ]] && rm -rf node_modules
+    local retry_limit=$NPM_INSTALL_RETRIES
+
     until is_npm_ok; do
+        [ $retry_limit -ne $NPM_INSTALL_RETRIES ] && rm -rf node_modules
+
         npm install
-        npm_install clean
+
+        if [ $((retry_limit--)) = 0 ]; then
+            echo 'Npm install failed' >&2
+            exit 1
+        fi
     done
 }
 
